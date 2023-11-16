@@ -3,7 +3,7 @@ var locationSearch = document.querySelector(".locationSearch")
 
 function cityWeatherCall() {
     var cityInput = document.querySelector("#locationInput").value;
-    var cityInputLc = cityInput.toLowerCase();
+    var cityInputLc = cityInput.toUpperCase();
     var apiKey = "cdb95d81773dbc08c77d0f967e4cd495";
     var forecastWeatherApi = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInputLc}&units=${"metric"}&appid=${apiKey}`;
     var currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${cityInputLc}&units=${"metric"}&appid=${apiKey}`
@@ -24,6 +24,7 @@ function cityWeatherCall() {
 
         var cityName = currentWeatherData.name
         console.log(cityName);
+
 
         var currentIcon = currentWeatherData.weather[0].icon
         var currentIconUrl = `https://openweathermap.org/img/wn/${currentIcon}.png`
@@ -301,5 +302,6 @@ searchBtn.addEventListener('click', function(event) {
         forecastFour.innerHTML = "";
         var forecastFive = document.querySelector(".forecastFive");
         forecastFive.innerHTML = "";
+
     }
 })

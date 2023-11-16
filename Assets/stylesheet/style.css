@@ -73,7 +73,7 @@ section{
     padding: 5px;
     margin: 0;
     border-style: none;
-    background-color: rgb(102, 140, 204);
+    background-color: rgb(177, 206, 255);
     border-radius: 2px;
     font-size: large;
     cursor: pointer;
@@ -89,6 +89,7 @@ section{
 .location-date-icon{
     margin-top: 0;
     margin-left: 10px;
+    text-align: start;
 }
 
 .currentSection{
@@ -106,7 +107,6 @@ li{
     background: linear-gradient(90deg, rgb(135, 129, 255) 0%, rgb(160, 160, 255)32%, rgb(81, 191, 255) 100%);
     border-radius: 5px;
     box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.238);
-
 }
 
 .forecastTitle{
