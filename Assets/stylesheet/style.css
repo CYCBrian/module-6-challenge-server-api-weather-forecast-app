@@ -1,55 +1,64 @@
-*{
+/* Set default font family for all elements */
+* {
     font-family: Arial, Helvetica, sans-serif;
+  }
+  
+/* Set margin, background color, and width for the body */
+body {
+    margin: 0;
+    background-color: rgb(243, 253, 255);
+    width: 100%;
 }
-
-header{
+  
+/* Style the header with letter-spacing, color, and background gradient */
+ header {
     letter-spacing: 3px;
     color: white;
-    background: rgb(5,0,113);
-    background: radial-gradient(circle, rgba(5,0,113,1) 15%, rgba(14,41,133,1) 60%, rgba(65,15,143,1) 100%);
+    background: rgb(5, 0, 113);
+    background: radial-gradient(
+      circle,
+      rgba(5, 0, 113, 1) 15%,
+      rgba(14, 41, 133, 1) 60%,
+      rgba(65, 15, 143, 1) 100%
+    );
 }
-
-h1{
+  
+/* Style the h1 with margin, padding, and box shadow */
+h1 {
     margin: 0;
     padding: 30px;
     box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.399);
     text-align: center;
 }
-
-h2{
+  
+/* Style the h2 with margin-top, padding, text-align, and width */
+h2 {
     margin-top: 0px;
     padding: 10px;
     text-align: center;
-}
-
-body{
-    margin: 0;
-    background-color: rgb(243, 253, 255);
     width: 100%;
 }
-
+  
+/* Style the container with flex display and space-between justification */
 .container {
     display: flex;
     justify-content: space-between;
 }
+  
+  /* Set margin for sections */
+section {
+    margin: 10px;
+}
 
+/* Style the left container with width, flex display, and column direction */
 .left-container {
     width: 25%;
     display: flex;
     flex-direction: column;
 }
-
-.right-container {
-    width: 75%;
-    display: flex;
-    flex-direction: column;
-}
-
-section{
-    margin: 10px
-}
-
-.searchBox{
+  
+/* Style the search box with flex display, column direction, alignment, padding, border, and margin */
+.searchBox {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -57,7 +66,8 @@ section{
     border-bottom: 1px solid black;
     margin-bottom: 0px;
 }
-
+  
+/* Style the location search input with width, box-sizing, padding, margin, and font size */
 .locationSearch {
     width: 100%;
     box-sizing: border-box;
@@ -66,7 +76,8 @@ section{
     margin-bottom: 5px;
     font-size: large;
 }
-
+  
+/* Style the search button with width, box-sizing, padding, margin, border style, background color, border radius, font size, and cursor */
 .searchBtn {
     width: 100%;
     box-sizing: border-box;
@@ -78,53 +89,84 @@ section{
     font-size: large;
     cursor: pointer;
 }
-
-.currentBox{
-    background: rgb(116,109,255);
-    background: linear-gradient(90deg, rgb(135, 129, 255) 0%, rgb(160, 160, 255)32%, rgb(81, 191, 255) 100%);
+  
+/* Set padding-left to 0 for the history list */
+.historyList {
+    padding-left: 0px;
+}
+  
+/* Style the right container with width, flex display, and column direction */
+.right-container {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+}
+  
+/* Style the current box with background gradient, border radius, and box shadow */
+.currentBox {
+    background: rgb(116, 109, 255);
+    background: linear-gradient(
+      90deg,
+      rgb(135, 129, 255) 0%,
+      rgb(160, 160, 255) 32%,
+      rgb(81, 191, 255) 100%
+    );
     border-radius: 5px;
     box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.238);
 }
 
-.location-date-icon{
+/* Style the location-date-icon with margin-top, margin-left, and text-align */
+.location-date-icon {
     margin-top: 0;
     margin-left: 10px;
     text-align: start;
 }
-
-.currentSection{
+  
+/* Style the current section with padding-inline-start */
+.currentSection {
     padding-inline-start: 20px;
 }
-
-li{
+  
+/* Remove default list style and set margin for list items */
+li {
     list-style: none;
     margin: 10px;
-    margin-left: 0;
+    margin-left: 20px;
 }
-
-.forecastBox{
-    background: rgb(116,109,255);
-    background: linear-gradient(90deg, rgb(135, 129, 255) 0%, rgb(160, 160, 255)32%, rgb(81, 191, 255) 100%);
+  
+/* Style the forecast box with background gradient, border radius, and box shadow */
+.forecastBox {
+    background: rgb(116, 109, 255);
+    background: linear-gradient(
+      90deg,
+      rgb(135, 129, 255) 0%,
+      rgb(160, 160, 255) 32%,
+      rgb(81, 191, 255) 100%
+    );
     border-radius: 5px;
     box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.238);
 }
-
-.forecastTitle{
+  
+/* Style the forecast title with margin-left */
+.forecastTitle {
     margin-left: 10px;
 }
-
-.forecastSection{
+  
+/* Style the forecast section with flex display and space-around justification */
+.forecastSection {
     display: flex;
     justify-content: space-around;
 }
-
-.forecastCard{
+  
+/* Style the forecast card with background color, padding, and border radius */
+.forecastCard {
     background-color: rgba(149, 198, 255, 0.404);
     padding: 10px;
     border-radius: 5px;
 }
-
-.historyElement{
+  
+/* Style the history element with background color, border radius, text-align, margin-right, padding, cursor, and font size */
+.historyElement {
     background-color: rgb(185, 185, 185);
     border-radius: 2px;
     text-align: center;
@@ -133,7 +175,20 @@ li{
     cursor: pointer;
     font-size: large;
 }
-
-.historyList{
-    padding-left: 0px;
+  
+/* Apply styles for devices with max-device-width of 905px */
+@media screen and (max-device-width: 905px) {
+    .forecastSection {
+      flex-direction: column;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+}
+  
+/* Apply styles for devices with max-device-width of 430px */
+@media screen and (max-device-width: 430px) {
+    h2 {
+      padding: 0px;
+      padding-top: 10px;
+    }
 }

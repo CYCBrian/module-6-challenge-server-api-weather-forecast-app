@@ -1,73 +1,113 @@
-var searchBtn = document.querySelector(".searchBtn")
-var locationSearch = document.querySelector(".locationSearch")
+// Select the search button, location search input, and history container
+var searchBtn = document.querySelector(".searchBtn");
+var locationSearch = document.querySelector(".locationSearch");
+var historyContainer = document.querySelector(".historyList");
 
+// Add an event listener for when the DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+  // Retrieve the searched cities from local storage or initialize an empty array
+  var searchedCities = JSON.parse(localStorage.getItem("searchedCities")) || [];
+
+  // Select the history list element
+  var historyList = document.querySelector(".historyList");
+
+  // Iterate through each searched city
+  searchedCities.forEach(function(cityName) {
+    // Create a new history element
+    var historyElement = document.createElement("li");
+
+    // Set the text content of the history element to the city name
+    historyElement.textContent = cityName;
+
+    // Add the "historyElement" class to the history element
+    historyElement.classList.add("historyElement");
+
+    // Append the history element to the history list
+    historyList.appendChild(historyElement);
+  });
+});
 
 function cityWeatherCall() {
-    var cityInput = document.querySelector("#locationInput").value;
-    var cityInputLc = cityInput.toUpperCase();
-    var apiKey = "cdb95d81773dbc08c77d0f967e4cd495";
-    var forecastWeatherApi = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInputLc}&units=${"metric"}&appid=${apiKey}`;
-    var currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${cityInputLc}&units=${"metric"}&appid=${apiKey}`
+  // Get the city input value and convert it to uppercase
+  var cityInput = document.querySelector("#locationInput").value;
+  var cityInputLc = cityInput.toUpperCase();
 
-    fetch(currentWeatherApi)
+  // Set the API key and the URLs for the forecast and current weather
+  var apiKey = "cdb95d81773dbc08c77d0f967e4cd495";
+  var forecastWeatherApi = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInputLc}&units=${"metric"}&appid=${apiKey}`;
+  var currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${cityInputLc}&units=${"metric"}&appid=${apiKey}`;
 
-        .then(response => response.json())
-        .then(currentWeatherData => {
-        console.log(currentWeatherData);
+  // Fetch the current weather data
+  fetch(currentWeatherApi)
+    .then(response => response.json())
+    .then(currentWeatherData => {
+      console.log(currentWeatherData);
 
-        var cityName = currentWeatherData.name
-        console.log(cityName);
-        localStorage.setItem("cityName", cityName);
-        var historyList = document.querySelector(".historyList");
-        var historyElement = document.createElement("li");
-        historyElement.textContent = localStorage.getItem("cityName");
-        historyList.appendChild(historyElement);
-        historyElement.classList.add("historyElement")
-        
+      // Get the city name from the current weather data
+      var cityName = currentWeatherData.name;
+      console.log(cityName);
 
-        var cityName = currentWeatherData.name
-        console.log(cityName);
+      // Retrieve the searched cities from local storage or initialize an empty array
+      var searchedCities = JSON.parse(localStorage.getItem("searchedCities")) || [];
 
-        var currentIcon = currentWeatherData.weather[0].icon
-        var currentIconUrl = `https://openweathermap.org/img/wn/${currentIcon}.png`
-        var iconElement = document.createElement("img");
-        iconElement.src = currentIconUrl;
-        console.log(iconElement);
+      // Add the current city to the searched cities array
+      searchedCities.push(cityName);
 
-        var currentTemp = currentWeatherData.main.temp;
-        console.log(currentTemp);
+      // Store the updated searched cities array in local storage
+      localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
 
-        var currentWind = currentWeatherData.wind.speed;
-        console.log(currentWind);
+      // Select the history list element
+      var historyList = document.querySelector(".historyList");
 
-        var currentHumidity = currentWeatherData.main.humidity;
-        console.log(currentHumidity);
+      // Create a new history element for the current city
+      var historyElement = document.createElement("li");
+      historyElement.textContent = cityName;
+      historyList.appendChild(historyElement);
+      historyElement.classList.add("historyElement");
 
-        var currentDate = new Date(currentWeatherData.dt * 1000);
-        var dateSequence = {month: "long", day:"numeric", year: "numeric"};
-        var formattedCurrentDate = currentDate.toLocaleDateString (undefined, dateSequence);
-        console.log(formattedCurrentDate);
+      // Get the current weather icon URL
+      var currentIcon = currentWeatherData.weather[0].icon;
+      var currentIconUrl = `https://openweathermap.org/img/wn/${currentIcon}.png`;
 
-        var locationDateIcon = document.querySelector(".location-date-icon");
-        locationDateIcon.textContent = `${cityName} (${formattedCurrentDate})`;
-        locationDateIcon.appendChild(iconElement);
+      // Create an image element for the current weather icon
+      var iconElement = document.createElement("img");
+      iconElement.src = currentIconUrl;
+      console.log(iconElement);
 
-        var currentSection = document.querySelector(".currentSection");
-        currentSection.innerHTML = "";
-        
-        var tempElement = document.createElement("li");
-        tempElement.textContent = `Temperature: ${currentTemp} °C`;
-        currentSection.appendChild(tempElement);
-        
-        var windElement = document.createElement("li");
-        windElement.textContent = `Wind Speed: ${currentWind} KMPH`;
-        currentSection.appendChild(windElement);
-        
-        var humidityElement = document.createElement("li");
-        humidityElement.textContent = `Relative Humidity: ${currentHumidity} %`;
-        currentSection.appendChild(humidityElement);
-        
+      // Get the current temperature, wind speed, humidity, and date
+      var currentTemp = currentWeatherData.main.temp;
+      var currentWind = currentWeatherData.wind.speed;
+      var currentHumidity = currentWeatherData.main.humidity;
+      var currentDate = new Date(currentWeatherData.dt * 1000);
 
+      // Format the current date
+      var dateSequence = { month: "long", day: "numeric", year: "numeric" };
+      var formattedCurrentDate = currentDate.toLocaleDateString(undefined, dateSequence);
+      console.log(formattedCurrentDate);
+
+      // Update the location, date, and icon in the UI
+      var locationDateIcon = document.querySelector(".location-date-icon");
+      locationDateIcon.textContent = `${cityName} (${formattedCurrentDate})`;
+      locationDateIcon.appendChild(iconElement);
+
+      // Clear the current section in the UI
+      var currentSection = document.querySelector(".currentSection");
+      currentSection.innerHTML = "";
+
+      // Create list elements for the temperature, wind speed, and humidity
+      var tempElement = document.createElement("li");
+      tempElement.textContent = `Temperature: ${currentTemp} °C`;
+      currentSection.appendChild(tempElement);
+    
+      // Create list elements for the wind speed
+      var windElement = document.createElement("li");
+      windElement.textContent = `Wind Speed: ${currentWind} KMPH`;
+      currentSection.appendChild(windElement);
+
+      // Create list element for humidity
+      var humidityElement = document.createElement("li");
+      humidityElement.textContent = `Relative Humidity: ${currentHumidity} %`;
+      currentSection.appendChild(humidityElement);
     });
 
     fetch(forecastWeatherApi)
@@ -75,6 +115,7 @@ function cityWeatherCall() {
         .then(forecastWeatherData => {
         console.log(forecastWeatherData);
         for (var i = 0; i < 40; i++){
+
             if (i === 7) {
                 var forecastDate = forecastWeatherData.list[i].dt_txt;
                 console.log(forecastDate);
@@ -158,6 +199,7 @@ function cityWeatherCall() {
                 var forecastHumidityElement = document.createElement("li");
                 forecastHumidityElement.textContent = `Humidity: ${forecastHumidity} %`;
                 forecastTwo.appendChild(forecastHumidityElement);
+
             } else if (i === 23) {
                 var forecastDate = forecastWeatherData.list[i].dt_txt;
                 console.log(forecastDate);
@@ -199,6 +241,7 @@ function cityWeatherCall() {
                 var forecastHumidityElement = document.createElement("li");
                 forecastHumidityElement.textContent = `Humidity: ${forecastHumidity} %`;
                 forecastThree.appendChild(forecastHumidityElement);
+
             } else if (i === 31) {
                 var forecastDate = forecastWeatherData.list[i].dt_txt;
                 console.log(forecastDate);
@@ -240,6 +283,7 @@ function cityWeatherCall() {
                 var forecastHumidityElement = document.createElement("li");
                 forecastHumidityElement.textContent = `Humidity: ${forecastHumidity} %`;
                 forecastFour.appendChild(forecastHumidityElement);
+
             } else if (i === 39) {
                 var forecastDate = forecastWeatherData.list[i].dt_txt;
                 console.log(forecastDate);
@@ -284,95 +328,112 @@ function cityWeatherCall() {
             }
         }
     });
-
 }
 
+// Add an event listener to the search button
 searchBtn.addEventListener('click', function(event) {
+    // Get the city input value
     var cityInput = document.querySelector("#locationInput").value;
-    if(cityInput === ""){
-        return
+  
+    // If the city input is empty, return and do nothing
+    if (cityInput === "") {
+      return;
     } else {
-        cityWeatherCall()
-        locationSearch.value = ""
-        var forecastOne = document.querySelector(".forecastOne");
-        forecastOne.innerHTML = "";
-        var forecastTwo = document.querySelector(".forecastTwo");
-        forecastTwo.innerHTML = "";
-        var forecastThree = document.querySelector(".forecastThree");
-        forecastThree.innerHTML = "";
-        var forecastFour = document.querySelector(".forecastFour");
-        forecastFour.innerHTML = "";
-        var forecastFive = document.querySelector(".forecastFive");
-        forecastFive.innerHTML = "";
-
+      // Call the cityWeatherCall function to fetch weather data for the city
+      cityWeatherCall();
+  
+      // Clear the location search input value
+      locationSearch.value = "";
+  
+      // Clear the forecast sections in the UI
+      var forecastOne = document.querySelector(".forecastOne");
+      forecastOne.innerHTML = "";
+  
+      var forecastTwo = document.querySelector(".forecastTwo");
+      forecastTwo.innerHTML = "";
+  
+      var forecastThree = document.querySelector(".forecastThree");
+      forecastThree.innerHTML = "";
+  
+      var forecastFour = document.querySelector(".forecastFour");
+      forecastFour.innerHTML = "";
+  
+      var forecastFive = document.querySelector(".forecastFive");
+      forecastFive.innerHTML = "";
     }
-})
+  });
 
-
-
-function historyWeatherCall() {
-    var historyInput = document.querySelector("#historyElement").value;
+  function historyWeatherCall() {
+    // Get the history input value and convert it to uppercase
+    var historyInput = event.target.textContent;
     var historyInputLc = historyInput.toUpperCase();
+  
+    // Set the API key and the URLs for the forecast and current weather
     var apiKey = "cdb95d81773dbc08c77d0f967e4cd495";
     var forecastWeatherApi = `https://api.openweathermap.org/data/2.5/forecast?q=${historyInputLc}&units=${"metric"}&appid=${apiKey}`;
-    var currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${historyInputLc}&units=${"metric"}&appid=${apiKey}`
-
+    var currentWeatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${historyInputLc}&units=${"metric"}&appid=${apiKey}`;
+  
+    // Fetch the current weather data
     fetch(currentWeatherApi)
-
-        .then(response => response.json())
-        .then(currentWeatherData => {
+      .then(response => response.json())
+      .then(currentWeatherData => {
         console.log(currentWeatherData);
-
-        var cityName = currentWeatherData.name
+  
+        // Get the city name from the current weather data
+        var cityName = currentWeatherData.name;
         console.log(cityName);
-
-        var currentIcon = currentWeatherData.weather[0].icon
-        var currentIconUrl = `https://openweathermap.org/img/wn/${currentIcon}.png`
+  
+        // Get the current weather icon URL
+        var currentIcon = currentWeatherData.weather[0].icon;
+        var currentIconUrl = `https://openweathermap.org/img/wn/${currentIcon}.png`;
+  
+        // Create an image element for the current weather icon
         var iconElement = document.createElement("img");
         iconElement.src = currentIconUrl;
         console.log(iconElement);
-
+  
+        // Get the current temperature, wind speed, humidity, and date
         var currentTemp = currentWeatherData.main.temp;
-        console.log(currentTemp);
-
         var currentWind = currentWeatherData.wind.speed;
-        console.log(currentWind);
-
         var currentHumidity = currentWeatherData.main.humidity;
-        console.log(currentHumidity);
-
         var currentDate = new Date(currentWeatherData.dt * 1000);
-        var dateSequence = {month: "long", day:"numeric", year: "numeric"};
-        var formattedCurrentDate = currentDate.toLocaleDateString (undefined, dateSequence);
+  
+        // Format the current date
+        var dateSequence = { month: "long", day: "numeric", year: "numeric" };
+        var formattedCurrentDate = currentDate.toLocaleDateString(undefined, dateSequence);
         console.log(formattedCurrentDate);
-
+  
+        // Update the location, date, and icon in the UI
         var locationDateIcon = document.querySelector(".location-date-icon");
         locationDateIcon.textContent = `${cityName} (${formattedCurrentDate})`;
         locationDateIcon.appendChild(iconElement);
-
+  
+        // Clear the current section in the UI
         var currentSection = document.querySelector(".currentSection");
         currentSection.innerHTML = "";
-        
+  
+        // Create list elements for the temperature, wind speed, and humidity
         var tempElement = document.createElement("li");
         tempElement.textContent = `Temperature: ${currentTemp} °C`;
         currentSection.appendChild(tempElement);
         
+        // Create list elements for the wind speed
         var windElement = document.createElement("li");
         windElement.textContent = `Wind Speed: ${currentWind} KMPH`;
         currentSection.appendChild(windElement);
-        
+
+        // Create list elements for the humidity
         var humidityElement = document.createElement("li");
         humidityElement.textContent = `Relative Humidity: ${currentHumidity} %`;
         currentSection.appendChild(humidityElement);
-        
-
-    });
+      });
 
     fetch(forecastWeatherApi)
         .then(response => response.json())
         .then(forecastWeatherData => {
         console.log(forecastWeatherData);
         for (var i = 0; i < 40; i++){
+
             if (i === 7) {
                 var forecastDate = forecastWeatherData.list[i].dt_txt;
                 console.log(forecastDate);
@@ -456,6 +517,7 @@ function historyWeatherCall() {
                 var forecastHumidityElement = document.createElement("li");
                 forecastHumidityElement.textContent = `Humidity: ${forecastHumidity} %`;
                 forecastTwo.appendChild(forecastHumidityElement);
+
             } else if (i === 23) {
                 var forecastDate = forecastWeatherData.list[i].dt_txt;
                 console.log(forecastDate);
@@ -497,6 +559,7 @@ function historyWeatherCall() {
                 var forecastHumidityElement = document.createElement("li");
                 forecastHumidityElement.textContent = `Humidity: ${forecastHumidity} %`;
                 forecastThree.appendChild(forecastHumidityElement);
+
             } else if (i === 31) {
                 var forecastDate = forecastWeatherData.list[i].dt_txt;
                 console.log(forecastDate);
@@ -538,6 +601,7 @@ function historyWeatherCall() {
                 var forecastHumidityElement = document.createElement("li");
                 forecastHumidityElement.textContent = `Humidity: ${forecastHumidity} %`;
                 forecastFour.appendChild(forecastHumidityElement);
+
             } else if (i === 39) {
                 var forecastDate = forecastWeatherData.list[i].dt_txt;
                 console.log(forecastDate);
@@ -585,20 +649,45 @@ function historyWeatherCall() {
 
 }
 
-var historyElement = document.querySelector("#historyElement");
-
-historyElement.addEventListener('click', function(event) {
-    var historyInput = document.querySelector("#historyElement").value;
-    historyWeatherCall(historyInput)
-    locationSearch.value = ""
-    var forecastOne = document.querySelector(".forecastOne");
-    forecastOne.innerHTML = "";
-    var forecastTwo = document.querySelector(".forecastTwo");
-    forecastTwo.innerHTML = "";
-    var forecastThree = document.querySelector(".forecastThree");
-    forecastThree.innerHTML = "";
-    var forecastFour = document.querySelector(".forecastFour");
-    forecastFour.innerHTML = "";
-    var forecastFive = document.querySelector(".forecastFive");
-    forecastFive.innerHTML = "";
-})
+// Add an event listener to the history container
+historyContainer.addEventListener('click', function(event) {
+    // Check if the clicked element matches the historyElement class
+    if (event.target.matches('.historyElement')) {
+      // Get the history input value
+      var historyInput = event.target.textContent;
+  
+      // Retrieve the searched cities from local storage or initialize an empty array
+      var searchedCities = JSON.parse(localStorage.getItem("searchedCities")) || [];
+  
+      // Iterate through the searched cities array
+      for (var i = 0; i < searchedCities.length; i++) {
+        // Check if the current city matches the history input value
+        if (searchedCities[i] === historyInput) {
+          // Call the historyWeatherCall function to fetch weather data for the selected city
+          historyWeatherCall(historyInput);
+  
+          // Clear the location search input value
+          locationSearch.value = "";
+  
+          // Clear the forecast sections in the UI
+          var forecastOne = document.querySelector(".forecastOne");
+          forecastOne.innerHTML = "";
+  
+          var forecastTwo = document.querySelector(".forecastTwo");
+          forecastTwo.innerHTML = "";
+  
+          var forecastThree = document.querySelector(".forecastThree");
+          forecastThree.innerHTML = "";
+  
+          var forecastFour = document.querySelector(".forecastFour");
+          forecastFour.innerHTML = "";
+  
+          var forecastFive = document.querySelector(".forecastFive");
+          forecastFive.innerHTML = "";
+  
+          // Exit the loop since we found a match
+          break;
+        }
+      }
+    }
+  });
