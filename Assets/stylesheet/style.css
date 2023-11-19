@@ -6,8 +6,9 @@
 /* Set margin, background color, and width for the body */
 body {
     margin: 0;
-    background-color: rgb(243, 253, 255);
     width: 100%;
+    background-color: rgb(3, 0, 31);
+    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
 }
   
 /* Style the header with letter-spacing, color, and background gradient */
@@ -37,6 +38,7 @@ h2 {
     padding: 10px;
     text-align: center;
     width: 100%;
+    color: white;
 }
   
 /* Style the container with flex display and space-between justification */
@@ -52,18 +54,19 @@ section {
 
 /* Style the left container with width, flex display, and column direction */
 .left-container {
-    width: 25%;
+    width: 20%;
     display: flex;
     flex-direction: column;
 }
   
 /* Style the search box with flex display, column direction, alignment, padding, border, and margin */
-.searchBox {
+.searchBox,
+.historyBox {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding-bottom: 30px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(255, 255, 255);
     margin-bottom: 0px;
 }
   
@@ -78,11 +81,13 @@ section {
 }
   
 /* Style the search button with width, box-sizing, padding, margin, border style, background color, border radius, font size, and cursor */
-.searchBtn {
+.searchBtn,
+.clearBtn {
     width: 100%;
     box-sizing: border-box;
     padding: 5px;
     margin: 0;
+    margin-top: 10px;
     border-style: none;
     background-color: rgb(177, 206, 255);
     border-radius: 2px;
@@ -93,11 +98,25 @@ section {
 /* Set padding-left to 0 for the history list */
 .historyList {
     padding-left: 0px;
+    width: 100%;
+    margin-top: 0px;
+}
+
+/* Style the history element with background color, border radius, text-align, margin, padding, cursor, and font size */
+.historyElement {
+    background-color: rgb(185, 185, 185);
+    border-radius: 2px;
+    text-align: center;
+    margin: 10px;
+    margin-top: 0px;
+    padding: 5px;
+    cursor: pointer;
+    font-size: large;
 }
   
 /* Style the right container with width, flex display, and column direction */
 .right-container {
-    width: 75%;
+    width: 70%;
     display: flex;
     flex-direction: column;
 }
@@ -106,19 +125,19 @@ section {
 .currentBox {
     background: rgb(116, 109, 255);
     background: linear-gradient(
-      90deg,
-      rgb(135, 129, 255) 0%,
-      rgb(160, 160, 255) 32%,
-      rgb(81, 191, 255) 100%
+      45deg,
+      rgb(135, 129, 255, 0.7) 0%,
+      rgb(160, 160, 255, 0.7) 32%,
+      rgb(81, 191, 255, 0.7) 100%
     );
     border-radius: 5px;
-    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.238);
+    box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, 0.3);
 }
 
 /* Style the location-date-icon with margin-top, margin-left, and text-align */
 .location-date-icon {
     margin-top: 0;
-    margin-left: 10px;
+    margin-left: 20px;
     text-align: start;
 }
   
@@ -138,18 +157,13 @@ li {
 .forecastBox {
     background: rgb(116, 109, 255);
     background: linear-gradient(
-      90deg,
-      rgb(135, 129, 255) 0%,
-      rgb(160, 160, 255) 32%,
-      rgb(81, 191, 255) 100%
+      45deg,
+      rgb(135, 129, 255, 0.7) 0%,
+      rgb(160, 160, 255, 0.7) 32%,
+      rgb(81, 191, 255, 0.7) 100%
     );
     border-radius: 5px;
-    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.238);
-}
-  
-/* Style the forecast title with margin-left */
-.forecastTitle {
-    margin-left: 10px;
+    box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, 0.3);
 }
   
 /* Style the forecast section with flex display and space-around justification */
@@ -158,30 +172,36 @@ li {
     justify-content: space-around;
 }
   
-/* Style the forecast card with background color, padding, and border radius */
+/* Style the forecast card with background gradient, padding, and border radius */
 .forecastCard {
-    background-color: rgba(149, 198, 255, 0.404);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 230, 0.2) 50%,
+      rgba(255, 239, 208, 0.4) 100%
+    );
     padding: 10px;
     border-radius: 5px;
 }
   
-/* Style the history element with background color, border radius, text-align, margin-right, padding, cursor, and font size */
-.historyElement {
-    background-color: rgb(185, 185, 185);
-    border-radius: 2px;
-    text-align: center;
-    margin-right: 0px;
-    padding: 5px;
-    cursor: pointer;
-    font-size: large;
-}
-  
 /* Apply styles for devices with max-device-width of 905px */
-@media screen and (max-device-width: 905px) {
+@media screen and (max-device-width: 1014px) {
     .forecastSection {
       flex-direction: column;
       justify-content: flex-start;
-      flex-wrap: wrap;
+    }
+}
+
+/* Apply styles for devices with max-device-width of 905px */
+@media screen and (max-device-width: 968px) {
+    .container {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .left-container{
+        width: 70%;
     }
 }
   
