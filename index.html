@@ -7,36 +7,48 @@
     <link rel="stylesheet" href="./Assets/stylesheet/style.css">
 </head>
 <body>
+    <!-- Header -->
     <header>
         <h1>Weather Dashboard</h1>
     </header>
-    
+
+    <!-- Main container -->
     <section class="container">
+        <!-- Left container -->
         <section class="left-container">
+            <!-- Search box -->
             <section class="searchBox">
                 <h2>Search for a City:</h2>
                 <input class="locationSearch" id="locationInput" type="text">
                 <button class="searchBtn">Search</button>
             </section>
-            <Section class="historyBox">
+
+            <!-- History box -->
+            <section class="historyBox">
                 <h2>Search History</h2>
                 <ul class="historyList">
-                    <!-- javascript stuff -->
-                </ul>
-            </Section>
-        </section>
-        <section class="right-container">
-            <section class="currentBox">
-                <h2>Current Weather</h2>
-                <h3 class="location-date-icon"></h2>
-                <ul class="currentSection">
-                    <!-- javascript stuff -->
+                    <!-- History elements will be dynamically added here -->
                 </ul>
             </section>
+        </section>
+
+        <!-- Right container -->
+        <section class="right-container">
+            <!-- Current weather box -->
+            <section class="currentBox">
+                <h2>Current Weather</h2>
+                <h3 class="location-date-icon"></h3>
+                    <!-- Location, date, and weather icon will be dynamically added here -->
+                <ul class="currentSection">
+                    <!-- Current weather details will be dynamically added here -->
+                </ul>
+            </section>
+
+            <!-- Forecast box -->
             <section class="forecastBox">
                 <h3 class="forecastTitle">5-Day Forecast:</h3>
                 <section class="forecastSection">
-                    <!-- javascript stuff -->
+                    <!-- Weather forecast details will be dynamically added inside each of the sections below -->
                     <section class="forecastOne"></section>
                     <section class="forecastTwo"></section>
                     <section class="forecastThree"></section>
@@ -45,10 +57,9 @@
                 </section>
             </section>
         </section>
-
     </section>
 
-
+    <!-- JavaScript file -->
     <script src="./Assets/javascript/script.js"></script>
 </body>
 </html>
